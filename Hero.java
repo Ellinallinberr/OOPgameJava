@@ -34,4 +34,9 @@ abstract public class Hero {
     public String getStats(String className) {
         return ("units." + className + ": " + this.name + " " + this.position + " Armor:" + this.armor + " HP:"  + this.health+"/"+this.maxHealth);
     }
+
+    public Hero findNearestEnemy(ArrayList<Hero> enemies) {
+        
+        return null;
+    }
 }
