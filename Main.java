@@ -1,8 +1,14 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Random;
 
 public class Main {
+    static Random random = new Random();
+    static ArrayList<Hero> darkSide = new ArrayList<>();
+    static ArrayList<Hero> lightSide = new ArrayList<>();
+    static HashMap<Hero, ArrayList<Double>> allDistance = new HashMap<>();
+
     public static void main(String[] args) {
         int numberOfTeams = 10;
         createTeams(numberOfTeams);
@@ -12,18 +18,31 @@ public class Main {
         System.out.println("---------------------------------------");
         System.out.println("Команда Тьмы:");
         darkSide.forEach(System.out::println);
+
+        // Сортируем героев по убыванию инициативы
+        lightSide.sort(Comparator.comparingInt(Hero::getInitiative).reversed());
+        darkSide.sort(Comparator.comparingInt(Hero::getInitiative).reversed());
+
+        // Выполняем действия для героев в порядке убывания инициативы
+        for (Hero hero : lightSide) {
+            hero.step();
+        }
+
+        for (Hero hero : darkSide) {
+            hero.step();
+        }
     }
 
     static String getName() {
-        return Names.values()[new Random().nextInt(Names.values().length - 1)].toString();
+        return Names.values()[random.nextInt(Names.values().length - 1)].toString();
     }
 
     static void createTeams(int numbers) {
         for (int i = 0; i < numbers; i++) {
             Hero lightSideHero = getRandomHero(random.nextInt(4), i, 0);
             Hero darkSideHero = getRandomHero(random.nextInt(3) + 4, i, 9);
-            lightSide.add(lightSide.stream().anyMatch(hero -> hero.className == "Crossbowman") && !lightSide.stream().anyMatch(hero -> hero.className == "Peasant")  ?  getRandomHero(3, i, 0) : lightSideHero);
-            darkSide.add(darkSide.stream().anyMatch(hero -> hero.className == "Sniper") && !darkSide.stream().anyMatch(hero -> hero.className == "Peasant")  ?  getRandomHero(3, i, 9) : darkSideHero);
+            lightSide.add(lightSideHero);
+            darkSide.add(darkSideHero);
         }
     }
 
@@ -47,10 +66,4 @@ public class Main {
                 return null;
         }
     }
-
-    static Random random = new Random();
-    static ArrayList<Hero> darkSide = new ArrayList<>();
-    static ArrayList<Hero> lightSide = new ArrayList<>();
-
-    static HashMap<Hero, ArrayList<Double>> allDistance = new HashMap<>();
 }

@@ -1,30 +1,37 @@
 import java.util.ArrayList;
+import java.util.Optional;
 
-public class Crossbowman extends Hero{
+public class Crossbowman extends Hero {
+    private int bolts; // Поле, обозначающее количество стрел
+
     public Crossbowman(String name, int x, int y) {
-        super(name, "Crossbowman", 150, 150, 10, x, y);
+        super(name, "Crossbowman", 150, 150, 10, x, y, 3);
+        this.bolts = 10; // Изначальное количество стрел
     }
 
     @Override
     public String toString() {
-        return this.getStats(this.getClassName());
+        return this.getStats(this.getClassName()) + " Bolts:" + bolts;
     }
 
-    public Hero findNearestEnemy(ArrayList<Hero> enemies) {
-    Hero nearestEnemy = null;
-    double minDistance = Double.MAX_VALUE;
-    double maxAttackRange = 10.0; // Максимальный диапазон атаки
+    public void step(ArrayList<Hero> enemies) {
+        // Проверка, жив ли лучник и есть ли у него стрелы
+        if (isAlive() && bolts > 0) {
+            Optional<Hero> nearestEnemy = findNearestEnemy(enemies);
 
-    for (Hero enemy : enemies) {
-        double distance = this.position.distance(enemy.position);
-
-        
-        if (distance < minDistance && distance <= maxAttackRange) {
-            minDistance = distance;
-            nearestEnemy = enemy;
+            if (nearestEnemy != null) {
+                // Выстрелить по ближайшему противнику
+                shoot(nearestEnemy);
+                bolts--; // Уменьшить количество стрел
+            }
+        } else {
+            // Лучник мертв или без стрел – выходим из метода
+            System.out.println("Crossbowman cannot shoot.");
         }
     }
 
-    return nearestEnemy;
-}
+    private void shoot(Optional<Hero> nearestEnemy) {
+        // Логика выстрела по цели
+        System.out.println("Crossbowman shoots at " + nearestEnemy.get().getClassName() + " " + nearestEnemy.get().getName() + ".");
+    }
 }
