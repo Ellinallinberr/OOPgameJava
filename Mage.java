@@ -11,8 +11,8 @@ public class Mage extends Hero {
         return this.getStats(this.getClassName());
     }
 
-    // Добавим метод step()
+    
     public void step(ArrayList<Hero> enemies) {
-        // Логика действий мага в ходе
+        
     }
 }

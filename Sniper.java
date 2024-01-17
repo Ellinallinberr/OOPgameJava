@@ -2,29 +2,37 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class Sniper extends Hero {
-    // ... (остальные поля и методы)
+    
+
+    private int bolts;
 
     public Sniper(String name, String className, int maxHealth, int health, int armor, int x, int y, int initiative) {
         super(name, className, maxHealth, health, armor, x, y, initiative);
-        this.bullets = 5;
+        this.bolts = 10;
+    }
+    @Override
+    public String toString() {
+        return this.getStats(this.getClassName()) + " Bolts:" + bolts;
     }
 
-    // Исправленный метод с совместимым возвращаемым типом
-    @Override
-    public Optional<Hero> findNearestEnemy(ArrayList<Hero> enemies) {
-        Hero nearestEnemy = null;
-        double minDistance = Double.MAX_VALUE;
-        double maxAttackRange = 13.0; // Максимальный диапазон атаки
+    public void step(ArrayList<Hero> enemies) {
+        // Проверка, жив ли лучник и есть ли у него стрелы
+        if (isAlive() && bolts > 0) {
+            Optional<Hero> nearestEnemy = findNearestEnemy(enemies);
 
-        for (Hero enemy : enemies) {
-            double distance = this.position.distance(enemy.position);
-
-            if (distance < minDistance && distance <= maxAttackRange) {
-                minDistance = distance;
-                nearestEnemy = enemy;
+            if (nearestEnemy != null) {
+                // Выстрелить по ближайшему противнику
+                shoot(nearestEnemy);
+                bolts--; // Уменьшить количество стрел
             }
+        } else {
+            // Лучник мертв или без стрел – выходим из метода
+            System.out.println("Sniper cannot shoot.");
         }
+    }
 
-        return Optional.ofNullable(nearestEnemy);
+    private void shoot(Optional<Hero> nearestEnemy) {
+        // Логика выстрела по цели
+        System.out.println("Sniper shoots at " + nearestEnemy.get().getClassName() + " " + nearestEnemy.get().getName() + ".");
     }
 }
