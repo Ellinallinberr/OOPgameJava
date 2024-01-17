@@ -6,10 +6,12 @@ public class Sniper extends Hero {
 
     private int bolts;
 
-    public Sniper(String name, String className, int maxHealth, int health, int armor, int x, int y, int initiative) {
-        super(name, className, maxHealth, health, armor, x, y, initiative);
+    public Sniper(String name,int x, int y) {
+        super (name, "Sniper", 150, 150, 10, x, y, 3);
         this.bolts = 10;
     }
+   
+    
     @Override
     public String toString() {
         return this.getStats(this.getClassName()) + " Bolts:" + bolts;
