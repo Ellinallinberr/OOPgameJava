@@ -86,12 +86,15 @@ abstract public class Hero {
     public void attack(Hero target, int minDamage, int maxDamage) {
         int damage = getRandomDamage(minDamage, maxDamage);
         target.takeDamage(damage);
-
-        // Вывод информации о нанесенном уроне
-        System.out.println(this.getClassName() + " " + this.name + " атакует " + target.getClassName() + " " + target.getName() +
-                " урон:" + damage + ", броня:" + target.getArmor() + ", hp:" + target.getHealth());
+    
+        // Вывод информации о нанесенном уроне с использованием цветов
+        String attackInfo = String.format("%s %s атакует %s %s урон:%d, броня:%d, hp:%d",
+                AnsiColors.RED, this.getClassName(), this.name,
+                AnsiColors.YELLOW, target.getClassName(), target.getName(),
+                damage, target.getArmor(), target.getHealth()) + AnsiColors.RESET;
+        System.out.println(attackInfo);
     }
-
+    
     private int getRandomDamage(int min, int max) {
         return min + (int) (Math.random() * ((max - min) + 1));
     }
