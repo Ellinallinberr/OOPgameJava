@@ -25,11 +25,11 @@ public class Main {
 
         // Выполняем действия для героев в порядке убывания инициативы
         for (Hero hero : lightSide) {
-            hero.step();
+            hero.step(darkSide);
         }
 
         for (Hero hero : darkSide) {
-            hero.step();
+            hero.step(lightSide);
         }
     }
 

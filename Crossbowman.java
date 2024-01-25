@@ -32,6 +32,6 @@ public class Crossbowman extends Hero {
 
     private void shoot(Optional<Hero> nearestEnemy) {
         // Логика выстрела по цели
-        System.out.println("Crossbowman shoots at " + nearestEnemy.get().getClassName() + " " + nearestEnemy.get().getName() + ".");
+        System.out.println("Crossbowman "+ this.name + " выпустил стрелу в " + nearestEnemy.get().getClassName() + " " + nearestEnemy.get().getName() + ".");
     }
 }

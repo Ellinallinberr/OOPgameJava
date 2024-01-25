@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Peasant extends Hero {
     public Peasant(String name, int x, int y) {
@@ -7,5 +8,9 @@ public class Peasant extends Hero {
     @Override
     public String toString() {
         return this.getStats(this.getClassName());
+    }
+      @Override
+    public void step(ArrayList<Hero> enemies) {
+        
     }
 }

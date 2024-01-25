@@ -35,6 +35,8 @@ public class Sniper extends Hero {
 
     private void shoot(Optional<Hero> nearestEnemy) {
         // Логика выстрела по цели
-        System.out.println("Sniper shoots at " + nearestEnemy.get().getClassName() + " " + nearestEnemy.get().getName() + ".");
+        nearestEnemy.ifPresent(enemy -> {
+            System.out.println("Sniper " + this.name + " выпустил пулю в " + enemy.getClassName() + " " + enemy.getName() + ".");
+        });
     }
 }

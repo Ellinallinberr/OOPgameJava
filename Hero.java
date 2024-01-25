@@ -57,9 +57,9 @@ abstract public class Hero {
 
         return Optional.ofNullable(nearestEnemy);
     }
-    public void step() {
-    }
+    public abstract void step(ArrayList<Hero> enemies);
+
     public String getName() {
-        return null;
+        return this.name;
     }
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Monk extends Hero {
     public Monk(String name, int x, int y) {
         super(name, "Monk", 100, 100, 20, x, y,1);
@@ -6,5 +8,9 @@ public class Monk extends Hero {
     @Override
     public String toString() {
         return this.getStats(this.getClassName());
+    }
+      @Override
+    public void step(ArrayList<Hero> enemies) {
+        //  стоит на месте и не делает никаких дополнительных действий
     }
 }
