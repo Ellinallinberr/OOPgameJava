@@ -35,7 +35,7 @@ public class Rogue extends Hero{
 
     private void attack(Hero target) {
         // Логика нанесения урона противнику
-        System.out.println("Spearman attacks " + target.getClassName() + " " + target.getName() + ".");
+        System.out.println("Rogue "+ this.name+ " атакует " + target.getClassName() + " " + target.getName() + ".");
     }
 
     private void moveTowards(Hero target) {
@@ -51,6 +51,6 @@ public class Rogue extends Hero{
             position.y += Integer.compare(dY, 0);
         }
 
-        System.out.println("Spearman moves towards " + target.getClassName() + " " + target.getName() + ".");
+        System.out.println("Rogue "+ this.name +" сделал шаг к " + target.getClassName() + " " + target.getName() + ".");
     }
 }
