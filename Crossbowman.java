@@ -11,7 +11,7 @@ public class Crossbowman extends Hero {
 
     @Override
     public String toString() {
-        return this.getStats(this.getClassName()) + " Bolts:" + bolts;
+        return this.getStats() + " Bolts:" + bolts;
     }
 
     public void step(ArrayList<Hero> enemies) {
@@ -19,19 +19,14 @@ public class Crossbowman extends Hero {
         if (isAlive() && bolts > 0) {
             Optional<Hero> nearestEnemy = findNearestEnemy(enemies);
 
-            if (nearestEnemy != null) {
+            if (nearestEnemy.isPresent()) {
                 // Выстрелить по ближайшему противнику
-                shoot(nearestEnemy);
+                attack(nearestEnemy.get(), 30, 50); // Урон для дальних атак
                 bolts--; // Уменьшить количество стрел
             }
         } else {
             // Лучник мертв или без стрел – выходим из метода
-            System.out.println("Crossbowman cannot shoot.");
+            System.out.println("Crossbowman "+ this.name+ "не имеет стрел");
         }
-    }
-
-    private void shoot(Optional<Hero> nearestEnemy) {
-        // Логика выстрела по цели
-        System.out.println("Crossbowman "+ this.name + " выпустил стрелу в " + nearestEnemy.get().getClassName() + " " + nearestEnemy.get().getName() + ".");
     }
 }

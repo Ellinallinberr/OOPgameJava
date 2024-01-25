@@ -8,7 +8,7 @@ public class Mage extends Hero {
 
     @Override
     public String toString() {
-        return this.getStats(this.getClassName());
+        return this.getStats();
     }
 
     

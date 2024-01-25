@@ -23,6 +23,13 @@ abstract public class Hero {
     public int getInitiative() {
         return initiative;
     }
+    public int getArmor() {
+        return armor;
+    }
+
+    public int getHealth() {
+        return health;
+    }
 
     public void getDistance(ArrayList<Hero> enemies) {
         for (Hero enemy : enemies) {
@@ -34,12 +41,13 @@ abstract public class Hero {
     public String getClassName() {
         return this.className;
     }
+
     public boolean isAlive() {
         return health > 0;
     }
 
-    public String getStats(String className) {
-        return ("units." + className + ": " + this.name + " " + this.position + " Armor:" + this.armor + " HP:" + this.health + "/" + this.maxHealth);
+    public String getStats() {
+        return ("units." + this.className + ": " + this.name + " " + this.position + " Armor:" + this.armor + " HP:" + this.health + "/" + this.maxHealth);
     }
 
     public Optional<Hero> findNearestEnemy(ArrayList<Hero> enemies) {
@@ -57,9 +65,34 @@ abstract public class Hero {
 
         return Optional.ofNullable(nearestEnemy);
     }
+
     public abstract void step(ArrayList<Hero> enemies);
 
     public String getName() {
         return this.name;
+    }
+
+    public void takeDamage(int damage) {
+        int effectiveDamage = Math.max(damage - this.armor, 0);
+        this.armor = Math.max(this.armor - damage, 0);
+        this.health -= effectiveDamage;
+
+        // Проверка на отрицательное здоровье и корректировка
+        if (this.health < 0) {
+            this.health = 0;
+        }
+    }
+
+    public void attack(Hero target, int minDamage, int maxDamage) {
+        int damage = getRandomDamage(minDamage, maxDamage);
+        target.takeDamage(damage);
+
+        // Вывод информации о нанесенном уроне
+        System.out.println(this.getClassName() + " " + this.name + " атакует " + target.getClassName() + " " + target.getName() +
+                " урон:" + damage + ", броня:" + target.getArmor() + ", hp:" + target.getHealth());
+    }
+
+    private int getRandomDamage(int min, int max) {
+        return min + (int) (Math.random() * ((max - min) + 1));
     }
 }

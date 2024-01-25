@@ -9,7 +9,7 @@ public class Rogue extends Hero{
 
     @Override
     public String toString() {
-        return this.getStats(this.getClassName());
+        return this.getStats();
     }
     @Override
     public void step(ArrayList<Hero> enemies) {
