@@ -14,5 +14,13 @@ public class Coordinates {
     public float distance(Coordinates enemyCoord) {
         return (float) Math.sqrt(Math.pow(x - enemyCoord.x, 2) + Math.pow(y - enemyCoord.y, 2));
     }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
+    }
 }
 

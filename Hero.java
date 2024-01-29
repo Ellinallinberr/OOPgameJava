@@ -10,6 +10,7 @@ abstract public class Hero {
     protected int maxHealth, health, armor;
     protected Coordinates position;
     protected int initiative;
+    protected boolean damagedThisTurn;
 
     public Hero(String name, String className, int maxHealth, int health, int armor, int x, int y, int initiative) {
         this.name = name;
@@ -19,6 +20,7 @@ abstract public class Hero {
         this.armor = armor;
         this.position = new Coordinates(x, y);
         this.initiative = initiative;
+        this.damagedThisTurn = false;
     }
     public int getInitiative() {
         return initiative;
@@ -29,6 +31,10 @@ abstract public class Hero {
 
     public int getHealth() {
         return health;
+    }
+
+    public boolean isDamagedThisTurn() {
+        return damagedThisTurn;
     }
 
     public void getDistance(ArrayList<Hero> enemies) {
@@ -74,7 +80,6 @@ abstract public class Hero {
 
     public void takeDamage(int damage) {
         int effectiveDamage = Math.max(damage - this.armor, 0);
-        this.armor = Math.max(this.armor - damage, 0);
         this.health -= effectiveDamage;
 
         // Проверка на отрицательное здоровье и корректировка
@@ -86,16 +91,17 @@ abstract public class Hero {
     public void attack(Hero target, int minDamage, int maxDamage) {
         int damage = getRandomDamage(minDamage, maxDamage);
         target.takeDamage(damage);
-    
-        // Вывод информации о нанесенном уроне с использованием цветов
-        String attackInfo = String.format("%s %s атакует %s %s урон:%d, броня:%d, hp:%d",
-                AnsiColors.RED, this.getClassName(), this.name,
-                AnsiColors.YELLOW, target.getClassName(), target.getName(),
-                damage, target.getArmor(), target.getHealth()) + AnsiColors.RESET;
-        System.out.println(attackInfo);
+
+        // Вывод информации о нанесенном уроне
+        System.out.println(this.getClassName() + " " + this.name + " атакует " + target.getClassName() + " " + target.getName() +
+                " урон:" + damage + ", броня:" + target.getArmor() + ", hp:" + target.getHealth());
     }
-    
+
     private int getRandomDamage(int min, int max) {
         return min + (int) (Math.random() * ((max - min) + 1));
     }
+    public Coordinates getPosition() {
+        return this.position;
+    }
+    
 }

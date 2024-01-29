@@ -8,4 +8,9 @@ public class AnsiColors {
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
     public static final String WHITE = "\u001B[37m";
+
+    // Новые цвета
+    public static final String GRAY = "\u001B[90m";
+    public static final String BRIGHT_YELLOW = "\u001B[93m";
+    public static final String BRIGHT_ORANGE = "\u001B[91m";
 }
