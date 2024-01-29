@@ -26,7 +26,7 @@ public class Crossbowman extends Hero {
             }
         } else {
             // Лучник мертв или без стрел – выходим из метода
-            System.out.println("Crossbowman "+ this.name+ "не имеет стрел");
+            System.out.println("Crossbowman "+ this.name+ " не имеет стрел");
         }
     }
 }

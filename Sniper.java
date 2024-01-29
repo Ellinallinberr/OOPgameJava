@@ -29,7 +29,7 @@ public class Sniper extends Hero {
             }
         } else {
             // Лучник мертв или без стрел – выходим из метода
-            System.out.println("Sniper "+ this.name+ "не имеет пуль");
+            System.out.println("Sniper "+ this.name+ " не имеет пуль");
         }
     }
 }

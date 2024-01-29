@@ -11,29 +11,42 @@ public class Main {
 
     public static void main(String[] args) {
         int numberOfTeams = 10;
-    createTeams(numberOfTeams);
+        createTeams(numberOfTeams);
 
-    System.out.println("Команда Света:");
-    lightSide.forEach(System.out::println);
-    System.out.println("---------------------------------------");
-    System.out.println("Команда Тьмы:");
-    darkSide.forEach(System.out::println);
+        int roundNumber = 1; // Начальный номер раунда
 
-    // Сортируем героев по убыванию инициативы
-    lightSide.sort(Comparator.comparingInt(Hero::getInitiative).reversed());
-    darkSide.sort(Comparator.comparingInt(Hero::getInitiative).reversed());
+        while (!lightSide.isEmpty() && !darkSide.isEmpty() && roundNumber <= 10) {
+            System.out.println("Раунд " + roundNumber);
+            System.out.println("Команда Света:");
+            lightSide.forEach(System.out::println);
+            System.out.println("---------------------------------------");
+            System.out.println("Команда Тьмы:");
+            darkSide.forEach(System.out::println);
 
-    // Выполняем действия для героев в порядке убывания инициативы
-    for (Hero hero : lightSide) {
-        hero.step(darkSide);
-    }
+            // Проверка наличия стрел у лучников
+            
 
-    for (Hero hero : darkSide) {
-        hero.step(lightSide);
-    }
+            // Сортируем героев по убыванию инициативы
+            lightSide.sort(Comparator.comparingInt(Hero::getInitiative).reversed());
+            darkSide.sort(Comparator.comparingInt(Hero::getInitiative).reversed());
 
-    // Отображаем текущее состояние поля после действий
-    View.displayField(lightSide, darkSide, false);
+            // Выполняем действия для героев в порядке убывания инициативы
+            for (Hero hero : lightSide) {
+                hero.step(darkSide);
+            }
+
+            for (Hero hero : darkSide) {
+                hero.step(lightSide);
+            }
+
+            // Отображаем текущее состояние поля после действий
+            View.displayField(lightSide, darkSide, false);
+
+            // Увеличиваем номер раунда
+            roundNumber++;
+        }
+
+        System.out.println("Игра завершена!");
     }
 
     static String getName() {
