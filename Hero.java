@@ -33,8 +33,8 @@ abstract public class Hero {
         return health;
     }
 
-    public boolean isDamagedThisTurn() {
-        return damagedThisTurn;
+    public boolean resetDamagedThisTurn() {
+        return damagedThisTurn = false;
     }
 
     public void getDistance(ArrayList<Hero> enemies) {
@@ -73,6 +73,19 @@ abstract public class Hero {
     }
 
     public abstract void step(ArrayList<Hero> enemies);
+    
+    protected void shareArrows(ArrayList<Hero> allies) {
+        for (Hero ally : allies) {
+            if (ally instanceof Crossbowman) {
+                Crossbowman crossbowman = (Crossbowman) ally;
+                if (this instanceof Peasant && ((Peasant) this).getBolts() > 0 && crossbowman.getBolts() == 0) {
+                    crossbowman.setBolts(1);
+                    ((Peasant) this).setBolts(((Peasant) this).getBolts() - 1);
+                    System.out.println("Peasant " + this.name + " передает стрелу лучнику " + crossbowman.getName());
+                }
+            }
+        }
+    }
 
     public String getName() {
         return this.name;
@@ -81,7 +94,8 @@ abstract public class Hero {
     public void takeDamage(int damage) {
         int effectiveDamage = Math.max(damage - this.armor, 0);
         this.health -= effectiveDamage;
-
+        this.armor -= Math.min(damage, this.armor); // Уменьшаем броню на количество полученного урона
+    
         // Проверка на отрицательное здоровье и корректировка
         if (this.health < 0) {
             this.health = 0;
@@ -94,7 +108,7 @@ abstract public class Hero {
 
         // Вывод информации о нанесенном уроне
         System.out.println(this.getClassName() + " " + this.name + " атакует " + target.getClassName() + " " + target.getName() +
-                " урон:" + damage + ", броня:" + target.getArmor() + ", hp:" + target.getHealth());
+                " урон:" + damage);
     }
 
     private int getRandomDamage(int min, int max) {

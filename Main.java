@@ -12,40 +12,42 @@ public class Main {
     public static void main(String[] args) {
         int numberOfTeams = 10;
         createTeams(numberOfTeams);
-
+    
         int roundNumber = 1; // Начальный номер раунда
-
-        while (!lightSide.isEmpty() && !darkSide.isEmpty() && roundNumber <= 10) {
+    
+        while (!lightSide.isEmpty() && !darkSide.isEmpty() && roundNumber <= 22) {
             System.out.println("Раунд " + roundNumber);
             System.out.println("Команда Света:");
             lightSide.forEach(System.out::println);
             System.out.println("---------------------------------------");
             System.out.println("Команда Тьмы:");
             darkSide.forEach(System.out::println);
-
-            // Проверка наличия стрел у лучников
-            
-
-            // Сортируем героев по убыванию инициативы
+    
+            // Сброс флага damagedThisTurn для всех героев
+            lightSide.forEach(Hero::resetDamagedThisTurn);
+            darkSide.forEach(Hero::resetDamagedThisTurn);
+    
+            // Сортировка героев по убыванию инициативы
             lightSide.sort(Comparator.comparingInt(Hero::getInitiative).reversed());
             darkSide.sort(Comparator.comparingInt(Hero::getInitiative).reversed());
-
-            // Выполняем действия для героев в порядке убывания инициативы
+    
+            // Выполнение действий для героев в порядке убывания инициативы
             for (Hero hero : lightSide) {
                 hero.step(darkSide);
             }
-
+    
             for (Hero hero : darkSide) {
                 hero.step(lightSide);
             }
-
-            // Отображаем текущее состояние поля после действий
-            View.displayField(lightSide, darkSide, false);
-
-            // Увеличиваем номер раунда
+    
+            // Отображение текущего состояния поля после действий
+            View.displayField(lightSide, darkSide, false); // Отображение команды Света
+            View.displayField(lightSide, darkSide, true); // Отображение команды Тьмы
+    
+            // Увеличение номера раунда
             roundNumber++;
         }
-
+    
         System.out.println("Игра завершена!");
     }
 

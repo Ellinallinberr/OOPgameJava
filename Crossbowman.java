@@ -18,15 +18,33 @@ public class Crossbowman extends Hero {
         // Проверка, жив ли лучник и есть ли у него стрелы
         if (isAlive() && bolts > 0) {
             Optional<Hero> nearestEnemy = findNearestEnemy(enemies);
-
+    
             if (nearestEnemy.isPresent()) {
                 // Выстрелить по ближайшему противнику
                 attack(nearestEnemy.get(), 30, 50); // Урон для дальних атак
                 bolts--; // Уменьшить количество стрел
             }
         } else {
-            // Лучник мертв или без стрел – выходим из метода
-            System.out.println("Crossbowman "+ this.name+ " не имеет стрел");
+            // Передача стрел крестьянам, если у лучника нет стрел
+            for (Hero ally : enemies) {
+                if (ally instanceof Peasant) {
+                    Peasant peasantAlly = (Peasant) ally;
+                    if (peasantAlly.getBolts() > 0) {
+                        peasantAlly.setBolts(peasantAlly.getBolts() - 1); // Уменьшить количество стрел у крестьянина
+                        this.bolts++; // Увеличить количество стрел у лучника
+                        System.out.println("Crossbowman " + this.name + " получил стрелу от крестьянина " + peasantAlly.getName());
+                        break; // Прерываем цикл, после того как стрела передана
+                    }
+                }
+            }
         }
+    }
+
+    public int getBolts() {
+        return bolts;
+    }
+
+    public void setBolts(int bolts) {
+        this.bolts = bolts;
     }
 }

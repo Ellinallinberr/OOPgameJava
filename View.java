@@ -16,15 +16,17 @@ public class View {
         // Размещение героев на поле для команды Света
         for (Hero hero : lightSide) {
             Coordinates position = hero.getPosition();
-            String symbol = getSymbolAndColorForHero(hero, isDarkSide);
+            String symbol = getSymbolAndColorForHero(hero, false);
             field[position.getY()][position.getX()] = symbol;
         }
 
         // Размещение героев на поле для команды Тьмы
         for (Hero hero : darkSide) {
             Coordinates position = hero.getPosition();
-            String symbol = getSymbolAndColorForHero(hero, isDarkSide);
-            field[position.getY()][position.getX()] = symbol;
+            String symbol = getSymbolAndColorForHero(hero, true);
+            if (!symbol.equals("_")) {
+                field[position.getY()][position.getX()] = symbol;
+            }
         }
 
         // Отображение поля в консоли
@@ -36,6 +38,8 @@ public class View {
         }
         System.out.println("-------------------------------");
     }
+
+
 
     private static String getSymbolAndColorForHero(Hero hero, boolean isDarkSide) {
         // Вернуть символ и цвет в зависимости от типа героя
@@ -76,7 +80,7 @@ public class View {
         // Определение цвета в зависимости от команды
         if (isDarkSide) {
             // Красный цвет для команды Тьмы
-            if (hero.isDamagedThisTurn()) {
+            if (hero.resetDamagedThisTurn()) {
                 // Желтый цвет, если герой получил урон
                 color = AnsiColors.YELLOW;
             } else {
@@ -84,7 +88,7 @@ public class View {
             }
         } else {
             // Синий цвет для команды Света
-            if (hero.isDamagedThisTurn()) {
+            if (hero.resetDamagedThisTurn()) {
                 // Желтый цвет, если герой получил урон
                 color = AnsiColors.YELLOW;
             } else {
