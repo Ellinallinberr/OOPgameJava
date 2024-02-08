@@ -11,27 +11,28 @@ public class Rogue extends Hero{
     public String toString() {
         return this.getStats();
     }
+    
     @Override
-    public void step(ArrayList<Hero> enemies) {
-        
-        if (isAlive()) {
-            Optional<Hero> nearestEnemy = findNearestEnemy(enemies);
+public void step(ArrayList<Hero> enemies) {
+    
+    if (isAlive()) {
+        Optional<Hero> nearestEnemy = findNearestEnemy(enemies);
 
-            if (nearestEnemy.isPresent()) {
-                // Получаем координаты ближайшего противника
-                Coordinates enemyCoord = nearestEnemy.get().position;
+        if (nearestEnemy.isPresent() && nearestEnemy.get().isAlive()) {
+            // Получаем координаты ближайшего противника
+            Coordinates enemyCoord = nearestEnemy.get().position;
 
-                // Проверяем, находится ли противник в соседней клетке
-                if (Math.abs(position.x - enemyCoord.x) <= 1 && Math.abs(position.y - enemyCoord.y) <= 1) {
-                    // Противник в соседней клетке, наносим повреждение
-                    attack(nearestEnemy.get());
-                } else {
-                    // Противник не в соседней клетке, двигаемся к нему
-                    moveTowards(nearestEnemy.get());
-                }
+            // Проверяем, находится ли противник в соседней клетке
+            if (Math.abs(position.x - enemyCoord.x) <= 1 && Math.abs(position.y - enemyCoord.y) <= 1) {
+                // Противник в соседней клетке, наносим повреждение
+                attack(nearestEnemy.get());
+            } else {
+                // Противник не в соседней клетке, двигаемся к нему
+                moveTowards(nearestEnemy.get());
             }
         }
     }
+}
 
     private void attack(Hero target) {
         // Логика нанесения урона противнику

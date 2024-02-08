@@ -21,7 +21,7 @@ abstract public class Hero {
         this.position = new Coordinates(x, y);
         this.initiative = initiative;
         this.damagedThisTurn = false;
-    }
+    } 
     public int getInitiative() {
         return initiative;
     }
@@ -73,7 +73,7 @@ abstract public class Hero {
     }
 
     public abstract void step(ArrayList<Hero> enemies);
-    
+
     protected void shareArrows(ArrayList<Hero> allies) {
         for (Hero ally : allies) {
             if (ally instanceof Crossbowman) {
