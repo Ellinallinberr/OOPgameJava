@@ -33,11 +33,11 @@ public class Main {
     
             // Выполнение действий для героев в порядке убывания инициативы
             for (Hero hero : lightSide) {
-                hero.step(darkSide);
+                hero.step(darkSide, lightSide);
             }
     
             for (Hero hero : darkSide) {
-                hero.step(lightSide);
+                hero.step(lightSide, darkSide);
             }
     
             // Отображение текущего состояния поля после действий
@@ -57,29 +57,29 @@ public class Main {
 
     static void createTeams(int numbers) {
         for (int i = 0; i < numbers; i++) {
-            Hero lightSideHero = getRandomHero(random.nextInt(4), i, 0);
-            Hero darkSideHero = getRandomHero(random.nextInt(3) + 4, i, 9);
+            Hero lightSideHero = getRandomHero(random.nextInt(4), i, 0, "light");
+            Hero darkSideHero = getRandomHero(random.nextInt(3) + 4, i, 9, "dark");
             lightSide.add(lightSideHero);
             darkSide.add(darkSideHero);
         }
     }
 
-    static Hero getRandomHero(int choice, int x, int y) {
+    static Hero getRandomHero(int choice, int x, int y, String team) {
         switch (choice) {
             case 0:
-                return new Monk(getName(), x, y);
+                return new Monk(getName(), x, y, team);
             case 1:
-                return new Spearman(getName(), x, y);
+                return new Spearman(getName(), x, y, team);
             case 2:
-                return new Crossbowman(getName(), x, y);
+                return new Crossbowman(getName(), x, y, team);
             case 3:
-                return new Peasant(getName(), x, y);
+                return new Peasant(getName(), x, y, team);
             case 4:
-                return new Mage(getName(), x, y);
+                return new Mage(getName(), x, y, team);
             case 5:
-                return new Rogue(getName(), x, y);
+                return new Rogue(getName(), x, y, team);
             case 6:
-                return new Sniper(getName(), x, y);
+                return new Sniper(getName(), x, y, team);
             default:
                 return null;
         }

@@ -4,8 +4,8 @@ import java.util.Optional;
 public class Crossbowman extends Hero {
     private int bolts; // Поле, обозначающее количество стрел
 
-    public Crossbowman(String name, int x, int y) {
-        super(name, "Crossbowman", 150, 150, 10, x, y, 3);
+    public Crossbowman(String name, int x, int y, String team) {
+        super(name, "Crossbowman", 150, 150, 10, x, y, 3, team);
         this.bolts = 10; // Изначальное количество стрел
     }
 
@@ -14,10 +14,10 @@ public class Crossbowman extends Hero {
         return this.getStats() + " Bolts:" + bolts;
     }
 
-    public void step(ArrayList<Hero> enemies) {
+    public void step(ArrayList<Hero> enemies, ArrayList<Hero> allies) {
         // Проверка, жив ли лучник и есть ли у него стрелы
         if (isAlive() && bolts > 0) {
-            Optional<Hero> nearestEnemy = findNearestEnemy(enemies);
+            Optional<Hero> nearestEnemy = findNearestAliveEnemy(enemies);
     
             if (nearestEnemy.isPresent()) {
                 // Выстрелить по ближайшему противнику

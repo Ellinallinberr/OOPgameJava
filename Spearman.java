@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class Spearman extends Hero {
-    public Spearman(String name, int x, int y) {
-        super(name, "Spearman", 300, 300, 40, x, y, 2);
+    public Spearman(String name, int x, int y, String team) {
+        super(name, "Spearman", 300, 300, 40, x, y, 2, team);
     }
 
     @Override
@@ -12,10 +12,10 @@ public class Spearman extends Hero {
     }
 
     @Override
-    public void step(ArrayList<Hero> enemies) {
+    public void step(ArrayList<Hero> enemies, ArrayList<Hero> allies) {
         // Проверка, жив ли копейщик
         if (isAlive()) {
-            Optional<Hero> nearestEnemy = findNearestEnemy(enemies);
+            Optional<Hero> nearestEnemy = findNearestAliveEnemy(enemies);
 
             if (nearestEnemy.isPresent()) {
                 // Получаем координаты ближайшего противника

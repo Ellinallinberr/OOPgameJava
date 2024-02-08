@@ -11,8 +11,9 @@ abstract public class Hero {
     protected Coordinates position;
     protected int initiative;
     protected boolean damagedThisTurn;
+    protected String team;
 
-    public Hero(String name, String className, int maxHealth, int health, int armor, int x, int y, int initiative) {
+    public Hero(String name, String className, int maxHealth, int health, int armor, int x, int y, int initiative, String team) {
         this.name = name;
         this.className = className;
         this.maxHealth = maxHealth;
@@ -56,14 +57,14 @@ abstract public class Hero {
         return ("units." + this.className + ": " + this.name + " " + this.position + " Armor:" + this.armor + " HP:" + this.health + "/" + this.maxHealth);
     }
 
-    public Optional<Hero> findNearestEnemy(ArrayList<Hero> enemies) {
+    public Optional<Hero> findNearestAliveEnemy(ArrayList<Hero> enemies) {
         Hero nearestEnemy = null;
         double minDistance = Double.MAX_VALUE;
 
         for (Hero enemy : enemies) {
             double distance = this.position.distance(enemy.position);
 
-            if (distance < minDistance) {
+            if ((distance < minDistance) && enemy.isAlive()) {
                 minDistance = distance;
                 nearestEnemy = enemy;
             }
@@ -72,20 +73,23 @@ abstract public class Hero {
         return Optional.ofNullable(nearestEnemy);
     }
 
-    public abstract void step(ArrayList<Hero> enemies);
+    public Optional<Hero> findNearestAliveAlly(ArrayList<Hero> allies) {
+        Hero nearestAlly = null;
+        double minDistance = Double.MAX_VALUE;
 
-    protected void shareArrows(ArrayList<Hero> allies) {
         for (Hero ally : allies) {
-            if (ally instanceof Crossbowman) {
-                Crossbowman crossbowman = (Crossbowman) ally;
-                if (this instanceof Peasant && ((Peasant) this).getBolts() > 0 && crossbowman.getBolts() == 0) {
-                    crossbowman.setBolts(1);
-                    ((Peasant) this).setBolts(((Peasant) this).getBolts() - 1);
-                    System.out.println("Peasant " + this.name + " передает стрелу лучнику " + crossbowman.getName());
-                }
+            double distance = this.position.distance(ally.position);
+
+            if ((distance < minDistance) && ally.isAlive()) {
+                minDistance = distance;
+                nearestAlly = ally;
             }
         }
+
+        return Optional.ofNullable(nearestAlly);
     }
+
+    public abstract void step(ArrayList<Hero> enemies, ArrayList<Hero> allies);
 
     public String getName() {
         return this.name;

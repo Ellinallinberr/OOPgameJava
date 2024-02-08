@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class Rogue extends Hero{
-    public Rogue(String name, int x, int y) {
-        super(name, "Rogue", 300, 300, 40, x, y,2);
+    public Rogue(String name, int x, int y, String team) {
+        super(name, "Rogue", 300, 300, 40, x, y,2, team);
     }
 
 
@@ -13,10 +13,10 @@ public class Rogue extends Hero{
     }
     
     @Override
-public void step(ArrayList<Hero> enemies) {
+public void step(ArrayList<Hero> enemies, ArrayList<Hero> allies) {
     
     if (isAlive()) {
-        Optional<Hero> nearestEnemy = findNearestEnemy(enemies);
+        Optional<Hero> nearestEnemy = findNearestAliveEnemy(enemies);
 
         if (nearestEnemy.isPresent() && nearestEnemy.get().isAlive()) {
             // Получаем координаты ближайшего противника
