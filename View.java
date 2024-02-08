@@ -78,7 +78,10 @@ public class View {
         String color = AnsiColors.RESET;
     
         // Определение цвета в зависимости от команды
-        if (isDarkSide) {
+        if (hero.getHealth() <= 0) {
+            // Серый цвет для персонажа с здоровьем <= 0
+            color = AnsiColors.GRAY;
+        } else if (isDarkSide) {
             // Красный цвет для команды Тьмы
             if (hero.resetDamagedThisTurn()) {
                 // Желтый цвет, если герой получил урон

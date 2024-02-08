@@ -42,7 +42,7 @@ public class Main {
     
             // Отображение текущего состояния поля после действий
             View.displayField(lightSide, darkSide, false); // Отображение команды Света
-            View.displayField(lightSide, darkSide, true); // Отображение команды Тьмы
+            // View.displayField(lightSide, darkSide, true); // Отображение команды Тьмы
     
             // Увеличение номера раунда
             roundNumber++;
